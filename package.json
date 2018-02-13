@@ -4,7 +4,7 @@
   "description": "How long it is until the next bus on “BUS ROUTE” leaving from “BUS STOP NAME” going “DIRECTION”? “BUS ROUTE” will be a substring of the bus route name which is only in one bus route “BUS STOP NAME” will be a substring of the bus stop name which is only in one bus stop on that route “DIRECTION” will be “north” “east” “west” or “south”",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host '0.0.0.0'"
   },
   "repository": {
     "type": "git",
