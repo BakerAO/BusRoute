@@ -6,9 +6,9 @@ class SearchRoute extends React.Component{
     constructor(props){
         super(props);
         this.state = { 
-            route: '',
-            stop: '',
-            direction: ''
+            route: '5',
+            direction: '4',
+            stop: '7SOL'
         };
         this.onRouteChange = this.onRouteChange.bind(this);
         this.onStopChange = this.onStopChange.bind(this);
@@ -19,35 +19,29 @@ class SearchRoute extends React.Component{
     onRouteChange(event){
         this.setState({ route: event.target.value });
     }
-
+    
+    onDirectionChange(event){
+        this.setState({ direction: event.target.value });
+    }
+    
     onStopChange(event){
         this.setState({ stop: event.target.value });
     }
 
-    onDirectionChange(event){
-        this.setState({ direction: event.target.value });
-    }
-
     onFormSubmit(event){
         event.preventDefault();
-        console.log(this);
-        //this.setState({ route: '' });
+        this.props.onCompleteSubmit(this.state.route, this.state.direction, this.state.stop);
     }
 
     render(){
         return (
             <form onSubmit={this.onFormSubmit} className='input-group'>
                 <input 
+                    
                     placeholder="Enter a bus route"
                     className = 'form-control'
                     value={this.state.route}
                     onChange={this.onRouteChange} 
-                />
-                <input 
-                    placeholder="Enter a bus stop"
-                    className = 'form-control'
-                    value={this.state.stop}
-                    onChange={this.onStopChange} 
                 />
                 <input 
                     placeholder="Enter a bus direction"
@@ -55,6 +49,13 @@ class SearchRoute extends React.Component{
                     value={this.state.direction}
                     onChange={this.onDirectionChange} 
                 />
+                <input 
+                    placeholder="Enter a bus stop"
+                    className = 'form-control'
+                    value={this.state.stop}
+                    onChange={this.onStopChange} 
+                />
+
                 <span className="input-group-btn">
                     <button type="submit" className="btn btn-secondary">
                         Submit
