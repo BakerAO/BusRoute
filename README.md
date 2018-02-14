@@ -14,5 +14,6 @@ Clone this repo, install dependencies, then start it up:
 ```
 
 ### View Online
-
+Click [here](http://35.167.137.10:8080)
+AWS EC2 Instance serving with Nodejs.
 
