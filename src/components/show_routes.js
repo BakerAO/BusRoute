@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 
 class ShowRoutes extends React.Component{
     constructor(props){
@@ -9,6 +10,8 @@ class ShowRoutes extends React.Component{
         };
         this.sendTerms = this.setUrl.bind(this);
         this.getData = this.getData.bind(this);
+        this.onShowRoutesClick = this.onShowRoutesClick.bind(this);
+        this.renderRoutes = this.renderRoutes.bind(this);
     }
     
     getData = function(url){
@@ -29,11 +32,34 @@ class ShowRoutes extends React.Component{
         this.getData(url);
     }
 
+    onShowRoutesClick(){
+        this.setUrl();
+    }
+
+    renderRoutes(){
+
+        return _.map(this.state.results, route => {
+            return (
+                <li className="list-group-item" key={route.Route}>
+                    {route.Description}
+                </li>
+            );
+        });
+    }
+
+
     render(){
-        console.log(this);
         return(
             <div>
-                
+                <button
+                    className="btn btn-secondary"
+                    onClick={this.onShowRoutesClick.bind(this)}
+                >
+                    Show Availible Routes
+                </button>
+                <ul className="list-group">
+                    {this.renderRoutes()}
+                </ul>
                 
 
             </div>

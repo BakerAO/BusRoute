@@ -12,11 +12,20 @@ class ShowTime extends React.Component{
     }
 
     render(){
-        return (
-            <div>
-                {this.props.time[0].DepartureText}
-            </div>
-        );
+        try{
+            return (
+                <div>
+                    {this.props.time[0].DepartureText}
+                </div>
+            );
+        }catch(err){
+            console.log(err);
+            return (
+                <div>
+                    Invalid Route/Direction/Stop
+                </div>
+            );
+        }
     }
 }
 
