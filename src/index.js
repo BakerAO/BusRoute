@@ -5,6 +5,7 @@ import axios from 'axios';
 import SearchRoute from './components/search_route';
 import ShowTime from './components/show_time';
 import ShowRoutes from './components/show_routes';
+import ShowDirections from './components/show_directions';
 
 class BusRoutes extends React.Component{
     
@@ -47,8 +48,16 @@ class BusRoutes extends React.Component{
                     <ShowTime time={this.state.results} />
                 </div>
                 <br />
-                <div>
-                    <ShowRoutes />
+                <div className="row">
+                    <div className="col-sm-4">
+                        <ShowRoutes />
+                    </div>
+                    <div className="col-sm-4">
+                        <ShowDirections />
+                    </div>
+                    <div className="col-sm-4">
+                        
+                    </div>
                 </div>
                 
 

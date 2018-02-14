@@ -6,8 +6,10 @@ class ShowRoutes extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            results: []
+            results: [],
+            showList: false
         };
+        
         this.sendTerms = this.setUrl.bind(this);
         this.getData = this.getData.bind(this);
         this.onShowRoutesClick = this.onShowRoutesClick.bind(this);
@@ -33,11 +35,19 @@ class ShowRoutes extends React.Component{
     }
 
     onShowRoutesClick(){
+        this.setState({
+            showList: true
+        });
         this.setUrl();
     }
 
-    renderRoutes(){
+    onHideRoutesClick(){
+        this.setState({
+            showList: false
+        });
+    }
 
+    renderRoutes(){
         return _.map(this.state.results, route => {
             return (
                 <li className="list-group-item" key={route.Route}>
@@ -52,13 +62,19 @@ class ShowRoutes extends React.Component{
         return(
             <div>
                 <button
-                    className="btn btn-secondary"
+                    className="btn btn-primary"
                     onClick={this.onShowRoutesClick.bind(this)}
                 >
-                    Show Availible Routes
+                    Show Routes
+                </button>
+                <button
+                    className="btn btn-secondary"
+                    onClick={this.onHideRoutesClick.bind(this)}
+                >
+                    Hide
                 </button>
                 <ul className="list-group">
-                    {this.renderRoutes()}
+                    {this.state.showList ? this.renderRoutes() : '' }
                 </ul>
                 
 
