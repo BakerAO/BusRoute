@@ -1,20 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-import SearchRoute from './components/search_route';
-import ShowTime from './components/show_time';
-
-class BusRoutes extends React.Component{
-    
-    
+class ShowRoutes extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            results: [],
-            time: ''
+            results: []
         };
-        this.sendTerms = this.sendTerms.bind(this);
+        this.sendTerms = this.setUrl.bind(this);
         this.getData = this.getData.bind(this);
     }
     
@@ -30,9 +23,9 @@ class BusRoutes extends React.Component{
                 });
     }
     
-    sendTerms(route, direction, stop){
+    setUrl(){
         const ROOT_URL = 'http://svc.metrotransit.org/NexTrip/';
-        const url = `${ROOT_URL}${route}/${direction}/${stop}`;
+        const url = `${ROOT_URL}Routes`;
         this.getData(url);
     }
 
@@ -40,11 +33,7 @@ class BusRoutes extends React.Component{
         console.log(this);
         return(
             <div>
-                <SearchRoute onCompleteSubmit={this.sendTerms} />
-                <br />
-                <div>
-                    <ShowTime time={this.state.results} />
-                </div>
+                
                 
 
             </div>
@@ -53,7 +42,4 @@ class BusRoutes extends React.Component{
     }
 }
 
-ReactDOM.render(
-    <BusRoutes />
-    , document.querySelector('.container')
-);
+export default ShowRoutes;
