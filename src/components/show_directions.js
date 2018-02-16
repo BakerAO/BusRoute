@@ -1,20 +1,27 @@
 import React from 'react';
+import axios from 'axios';
+import _ from 'lodash';
 
 class ShowDirections extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            directions: [],
             showList: false
         };
+
         this.onShowDirectionsClick = this.onShowDirectionsClick.bind(this);
         this.onHideDirectionsClick = this.onHideDirectionsClick.bind(this);
         this.renderDirections = this.renderDirections.bind(this);
+        this.setUrl = this.setUrl.bind(this);
+        this.getData = this.getData.bind(this);
     }
     
     onShowDirectionsClick(){
         this.setState({
             showList: true
         });
+        this.setUrl(this.props.selectedRoute);
     }
 
     onHideDirectionsClick(){
@@ -22,35 +29,48 @@ class ShowDirections extends React.Component{
             showList: false
         });
     }
-    
-    renderDirections(){
-        return (
-            <ul className="list-group">
-                <li className="list-group-item">
-                    1: Southbound
-                </li>
-                <li className="list-group-item">
-                    2: Eastbound
-                </li>
-                <li className="list-group-item">
-                    3: Westbound
-                </li>
-                <li className="list-group-item">
-                    4: Northbound
-                </li>
-            </ul>
-        );
+
+    setUrl(routeNumber){
+        const ROOT_URL = 'http://svc.metrotransit.org/NexTrip/';
+        const url = `${ROOT_URL}Directions/${routeNumber}`;
+        this.getData(url);
     }
 
+    getData(url){
+        axios.get(url)
+            .then( (response) => {
+                this.setState({
+                    directions: response.data
+                });
+            })
+            .catch( (error) => {
+                console.log(error);
+            })
+        ;
+    }
 
+    onDirectionClick(directionNumber){
+        this.props.onSelectDirection(directionNumber);
+    }
+
+    renderDirections(){
+        return _.map(this.state.directions, direction => {
+            return (
+                <li className="list-group-item" key={direction.Value} onClick={() => this.onDirectionClick(direction.Value)} >
+                    {direction.Text}
+                </li>
+            );
+        });
+    }
+    
     render(){
-       return(
+        return(
             <div>
                 <button
                     className="btn btn-primary"
                     onClick={this.onShowDirectionsClick.bind(this)}
                 >
-                    Show Directions
+                    Select Direction
                 </button>
                 <button
                     className="btn btn-secondary"
@@ -58,7 +78,9 @@ class ShowDirections extends React.Component{
                 >
                     Hide
                 </button>
-                {this.state.showList ? this.renderDirections() : ''}
+                <ul className="list-group">
+                    {this.state.showList ? this.renderDirections() : ''}
+                </ul>
             </div>
        );
     }

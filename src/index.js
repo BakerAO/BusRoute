@@ -8,28 +8,31 @@ import ShowRoutes from './components/show_routes';
 import ShowDirections from './components/show_directions';
 
 class BusRoutes extends React.Component{
-    
-    
     constructor(props){
         super(props);
         this.state = {
             results: [],
-            time: ''
+            time: '',
+            routeNumber: '',
+            directionNumber: ''
         };
         this.sendTerms = this.sendTerms.bind(this);
         this.getData = this.getData.bind(this);
+        this.setRouteNumber = this.setRouteNumber.bind(this);
+        this.setDirectionNumber = this.setDirectionNumber.bind(this);
     }
     
     getData = function(url){
-            axios.get(url)
-                .then( (response) => {
-                    this.setState({
-                        results: response.data
-                    });
-                })
-                .catch( (error) => {
-                    console.log(error);
+        axios.get(url)
+            .then( (response) => {
+                this.setState({
+                    results: response.data
                 });
+            })
+            .catch( (error) => {
+                console.log(error);
+            })
+        ;
     }
     
     sendTerms(route, direction, stop){
@@ -38,11 +41,25 @@ class BusRoutes extends React.Component{
         this.getData(url);
     }
 
+    setRouteNumber(routeNumber){
+        this.setState({
+            routeNumber: routeNumber
+        });
+    }
+
+    setDirectionNumber(directionNumber){
+        this.setState({
+            directionNumber: directionNumber
+        });
+    }
+
     render(){
         console.log(this);
         return(
             <div>
-                <SearchRoute onCompleteSubmit={this.sendTerms} />
+                <div>
+                    <SearchRoute onCompleteSubmit={this.sendTerms} />
+                </div>
                 <br />
                 <div>
                     <ShowTime time={this.state.results} />
@@ -50,10 +67,13 @@ class BusRoutes extends React.Component{
                 <br />
                 <div className="row">
                     <div className="col-sm-4">
-                        <ShowRoutes />
+                        <ShowRoutes onSelectRoute={this.setRouteNumber} />
                     </div>
                     <div className="col-sm-4">
-                        <ShowDirections />
+                        <ShowDirections 
+                            selectedRoute={this.state.routeNumber}
+                            onSelectDirection={this.setDirectionNumber}
+                        />
                     </div>
                     <div className="col-sm-4">
                         

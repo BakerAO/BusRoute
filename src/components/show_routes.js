@@ -10,22 +10,24 @@ class ShowRoutes extends React.Component{
             showList: false
         };
         
-        this.sendTerms = this.setUrl.bind(this);
+        this.setUrl = this.setUrl.bind(this);
         this.getData = this.getData.bind(this);
         this.onShowRoutesClick = this.onShowRoutesClick.bind(this);
         this.renderRoutes = this.renderRoutes.bind(this);
+        this.onRouteClick = this.onRouteClick.bind(this);
     }
     
     getData = function(url){
-            axios.get(url)
-                .then( (response) => {
-                    this.setState({
-                        results: response.data
-                    });
-                })
-                .catch( (error) => {
-                    console.log(error);
+        axios.get(url)
+            .then( (response) => {
+                this.setState({
+                    results: response.data
                 });
+            })
+            .catch( (error) => {
+                console.log(error);
+            })
+        ;
     }
     
     setUrl(){
@@ -47,10 +49,14 @@ class ShowRoutes extends React.Component{
         });
     }
 
+    onRouteClick(routeNumber){
+        this.props.onSelectRoute(routeNumber);
+    }
+
     renderRoutes(){
         return _.map(this.state.results, route => {
             return (
-                <li className="list-group-item" key={route.Route}>
+                <li className="list-group-item" key={route.Route} onClick={() => this.onRouteClick(route.Route)} >
                     {route.Description}
                 </li>
             );
@@ -65,7 +71,7 @@ class ShowRoutes extends React.Component{
                     className="btn btn-primary"
                     onClick={this.onShowRoutesClick.bind(this)}
                 >
-                    Show Routes
+                    Select a Route
                 </button>
                 <button
                     className="btn btn-secondary"
