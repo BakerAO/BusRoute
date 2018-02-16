@@ -49,20 +49,19 @@ class ShowRoutes extends React.Component{
         });
     }
 
-    onRouteClick(routeNumber){
-        this.props.onSelectRoute(routeNumber);
+    onRouteClick(route){
+        this.props.onSelectRoute(route);
     }
 
     renderRoutes(){
         return _.map(this.state.results, route => {
             return (
-                <li className="list-group-item" key={route.Route} onClick={() => this.onRouteClick(route.Route)} >
+                <li className="list-group-item" key={route.Route} onClick={() => this.onRouteClick(route)} >
                     {route.Description}
                 </li>
             );
         });
     }
-
 
     render(){
         return(
@@ -82,11 +81,8 @@ class ShowRoutes extends React.Component{
                 <ul className="list-group">
                     {this.state.showList ? this.renderRoutes() : '' }
                 </ul>
-                
-
             </div>
         );
-
     }
 }
 

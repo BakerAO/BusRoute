@@ -49,14 +49,14 @@ class ShowDirections extends React.Component{
         ;
     }
 
-    onDirectionClick(directionNumber){
-        this.props.onSelectDirection(directionNumber);
+    onDirectionClick(direction){
+        this.props.onSelectDirection(direction);
     }
 
     renderDirections(){
         return _.map(this.state.directions, direction => {
             return (
-                <li className="list-group-item" key={direction.Value} onClick={() => this.onDirectionClick(direction.Value)} >
+                <li className="list-group-item" key={direction.Value} onClick={() => this.onDirectionClick(direction)} >
                     {direction.Text}
                 </li>
             );

@@ -4,9 +4,9 @@ class SearchRoute extends React.Component{
     constructor(props){
         super(props);
         this.state = { 
-            route: '5',
-            direction: '4',
-            stop: '7SOL'
+            route: '',
+            direction: '',
+            stop: ''
         };
         this.onRouteChange = this.onRouteChange.bind(this);
         this.onStopChange = this.onStopChange.bind(this);
@@ -36,19 +36,19 @@ class SearchRoute extends React.Component{
             <form onSubmit={this.onFormSubmit} className='input-group'>
                 <input 
                     
-                    placeholder="Enter a bus route"
+                    placeholder="Enter a bus route number"
                     className = 'form-control'
                     value={this.state.route}
                     onChange={this.onRouteChange} 
                 />
                 <input 
-                    placeholder="Enter a bus direction"
+                    placeholder="Enter a bus direction number"
                     className = 'form-control'
                     value={this.state.direction}
                     onChange={this.onDirectionChange} 
                 />
                 <input 
-                    placeholder="Enter a bus stop"
+                    placeholder="Enter a four character stop identifier"
                     className = 'form-control'
                     value={this.state.stop}
                     onChange={this.onStopChange} 

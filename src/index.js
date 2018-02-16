@@ -6,6 +6,7 @@ import SearchRoute from './components/search_route';
 import ShowTime from './components/show_time';
 import ShowRoutes from './components/show_routes';
 import ShowDirections from './components/show_directions';
+import ShowStops from './components/show_stops';
 
 class BusRoutes extends React.Component{
     constructor(props){
@@ -14,12 +15,18 @@ class BusRoutes extends React.Component{
             results: [],
             time: '',
             routeNumber: '',
-            directionNumber: ''
+            directionNumber: '',
+            stopNumber: '',
+            routeName: '',
+            directionName: '',
+            stopName: ''
         };
+
         this.sendTerms = this.sendTerms.bind(this);
         this.getData = this.getData.bind(this);
-        this.setRouteNumber = this.setRouteNumber.bind(this);
-        this.setDirectionNumber = this.setDirectionNumber.bind(this);
+        this.setRoute = this.setRoute.bind(this);
+        this.setDirection = this.setDirection.bind(this);
+        this.setStop = this.setStop.bind(this);
     }
     
     getData = function(url){
@@ -41,15 +48,24 @@ class BusRoutes extends React.Component{
         this.getData(url);
     }
 
-    setRouteNumber(routeNumber){
+    setRoute(route){
         this.setState({
-            routeNumber: routeNumber
+            routeNumber: route.Route,
+            routeName: route.Description
         });
     }
 
-    setDirectionNumber(directionNumber){
+    setDirection(direction){
         this.setState({
-            directionNumber: directionNumber
+            directionNumber: direction.Value,
+            directionName: direction.Text
+        });
+    }
+
+    setStop(stop){
+        this.setState({
+            stopNumber: stop.Value,
+            stopName: stop.Text
         });
     }
 
@@ -57,33 +73,47 @@ class BusRoutes extends React.Component{
         console.log(this);
         return(
             <div>
-                <div>
-                    <SearchRoute onCompleteSubmit={this.sendTerms} />
-                </div>
+                <h1 align="center">Minneapolis Mertro Transit</h1>
                 <br />
                 <div>
-                    <ShowTime time={this.state.results} />
+                    <h2 align="center">
+                        <ShowTime time={this.state.results} />
+                    </h2>
+                    <p>{this.state.routeName}</p>
+                    <p>{this.state.directionName}</p>
+                    <p>{this.state.stopName}</p>
                 </div>
                 <br />
                 <div className="row">
-                    <div className="col-sm-4">
-                        <ShowRoutes onSelectRoute={this.setRouteNumber} />
-                    </div>
-                    <div className="col-sm-4">
-                        <ShowDirections 
-                            selectedRoute={this.state.routeNumber}
-                            onSelectDirection={this.setDirectionNumber}
+                    <div className="col-sm-3">
+                        <ShowRoutes 
+                            onSelectRoute={this.setRoute} 
                         />
                     </div>
-                    <div className="col-sm-4">
-                        
+                    <div className="col-sm-3">
+                        <ShowDirections 
+                            selectedRoute={this.state.routeNumber}
+                            onSelectDirection={this.setDirection}
+                        />
+                    </div>
+                    <div className="col-sm-3">
+                        <ShowStops
+                            selectedRoute={this.state.routeNumber}
+                            selectedDirection={this.state.directionNumber}
+                            onSelectStop={this.setStop}
+                        />
+                    </div>
+                    <div className="col-sm-3">
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={() => this.sendTerms(this.state.routeNumber, this.state.directionNumber, this.state.stopNumber)}
+                        >
+                            Submit
+                        </button>
                     </div>
                 </div>
-                
-
             </div>
         );
-
     }
 }
 
