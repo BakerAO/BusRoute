@@ -51,6 +51,9 @@ class ShowStops extends React.Component{
 
     onStopClick(stop){
         this.props.onSelectStop(stop);
+        this.setState({
+            showList: false
+        });
     }
 
     renderStops(){

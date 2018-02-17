@@ -51,6 +51,9 @@ class ShowRoutes extends React.Component{
 
     onRouteClick(route){
         this.props.onSelectRoute(route);
+        this.setState({
+            showList: false
+        });
     }
 
     renderRoutes(){

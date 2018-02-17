@@ -51,6 +51,9 @@ class ShowDirections extends React.Component{
 
     onDirectionClick(direction){
         this.props.onSelectDirection(direction);
+        this.setState({
+            showList: false
+        });
     }
 
     renderDirections(){
