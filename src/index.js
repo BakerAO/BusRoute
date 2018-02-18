@@ -73,7 +73,7 @@ class BusRoutes extends React.Component{
         console.log(this);
         return(
             <div>
-                <h1 align="center">Minneapolis Mertro Transit</h1>
+                <h1 align="center">Minneapolis Metro Transit</h1>
                 <br />
                 <div>
                     <h2 align="center">
